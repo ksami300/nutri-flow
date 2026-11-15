@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+﻿const mongoose = require("mongoose");
 
 const mealFoodSchema = new mongoose.Schema(
   {
@@ -90,7 +90,7 @@ const mealPlanSchema = new mongoose.Schema(
     },
     source: {
       type: String,
-      enum: ["generated", "ai", "manual"],
+      enum: ["generated", "ai", "manual", "deterministic"],
       default: "generated",
     },
     isPublic: {
@@ -124,3 +124,7 @@ const mealPlanSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("MealPlan", mealPlanSchema);
+
+
+
+

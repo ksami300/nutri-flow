@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -16,24 +16,25 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const healthRoutes = require("./routes/healthRoutes");
 const publicMealPlanRoutes = require("./routes/publicMealPlanRoutes");
 const aiRoutes = require("./routes/aiRoutes");
+const waterTrackerRoutes = require("./routes/waterTrackerRoutes");
 
-// 🔥 UVOZ FINANSIJSKIH RUTER VODOVA ZA STRIPE CUSTOMER PORTAL
+// ðŸ”¥ UVOZ FINANSIJSKIH RUTER VODOVA ZA STRIPE CUSTOMER PORTAL
 const billingRoutes = require("./routes/billingRoutes");
 
 const { stripeWebhook } = require("./controllers/paymentController");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const { apiLimiter } = require("./middleware/rateLimiter");
 
-// 🔥 UVOZ SENTRY ERROR TRACKING PODSISTEMA
+// ðŸ”¥ UVOZ SENTRY ERROR TRACKING PODSISTEMA
 const { sentryErrorHandler } = require("./middleware/sentryMiddleware");
 
 const app = express();
 
-app.set("trust proxy", process.env.TRUST_PROXY === "true");
+app.set("trust proxy", 1);
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(morgan("combined", { stream: logger.stream }));
 
-// ✅ Otvorene mrežne kapije za lokalni saobraćaj i spajanje Windows/WSL-a
+// âœ… Otvorene mreÅ¾ne kapije za lokalni saobraÄ‡aj i spajanje Windows/WSL-a
 const allowedOrigins = (env.FRONTEND_URL || "")
   .split(",")
   .map((origin) => origin.trim())
@@ -42,7 +43,7 @@ const allowedOrigins = (env.FRONTEND_URL || "")
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".trycloudflare.com")) return callback(null, true);
     return callback(new Error("Origin nije dozvoljen."));
   },
   credentials: true,
@@ -54,7 +55,7 @@ app.options("*", cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
-// ✅ STRIPE WEBHOOK PRIMA SIROVE BAJTOVE PRE JSON PARSERA
+// âœ… STRIPE WEBHOOK PRIMA SIROVE BAJTOVE PRE JSON PARSERA
 app.post("/api/payments/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 
 app.use(express.json());
@@ -78,7 +79,7 @@ app.use(hpp());
 app.use(apiLimiter);
 
 // ======================================================================
-// 🌐 KRUNSKA BAZNA RUTA (Potvrda rada servera za diplomsku komisiju)
+// ðŸŒ KRUNSKA BAZNA RUTA (Potvrda rada servera za diplomsku komisiju)
 // ======================================================================
 app.get("/", (_req, res) => {
   return res.status(200).json({
@@ -98,15 +99,19 @@ app.use("/api/public", publicMealPlanRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/health", healthRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/water-tracker", waterTrackerRoutes);
 
-// 🔥 MAPIRANJE STRIPE PRETPRAVNIČKOG KORISNIČKOG PORTALA
+// ðŸ”¥ MAPIRANJE STRIPE PRETPRAVNIÄŒKOG KORISNIÄŒKOG PORTALA
 app.use("/api/billing", billingRoutes);
 
 app.use(notFound);
 
-// 🛡️ SENTRY PRESRETAČ GREŠAKA (Mora biti postavljen tačno ovde pre finalnog handlera!)
+// ðŸ›¡ï¸ SENTRY PRESRETAÄŒ GREÅ AKA (Mora biti postavljen taÄno ovde pre finalnog handlera!)
 app.use(sentryErrorHandler);
 
 app.use(errorHandler);
 
 module.exports = app;
+
+
+
