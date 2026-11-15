@@ -1,0 +1,11 @@
+{
+  "remoteName": "origin",
+  "projects": [
+    {
+      "id": "prj_0dn7j1rFlpHgywlPwfuVOLpBHYtm",
+      "name": "nutriflow",
+      "directory": "frontend",
+      "orgId": "team_6E3wWWo7jAuYZ7SU7fXLVrHu"
+    }
+  ]
+}
