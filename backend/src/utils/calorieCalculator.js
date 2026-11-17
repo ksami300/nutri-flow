@@ -1,6 +1,6 @@
-const MIN_CALORIES = {
-  male: 1500,
-  female: 1200,
+﻿const MIN_CALORIES = {
+  male: 1650,
+  female: 1450,
 };
 
 const activityMultiplier = {
@@ -9,6 +9,8 @@ const activityMultiplier = {
   moderate: 1.55,
   active: 1.725,
   veryActive: 1.9,
+  very_active: 1.9,
+  athlete: 2.38,
 };
 
 const assertValidNumber = (value, name) => {
@@ -42,20 +44,19 @@ const calculateTdee = ({ gender, weight, height, age, activityLevel }) => {
 };
 
 const calculateCalories = ({ gender, weight, height, age, activityLevel, goal }) => {
-  if (!['lose', 'gain', 'maintain'].includes(goal)) {
+  if (!["lose", "gain", "maintain"].includes(goal)) {
     throw new Error(`Invalid goal: ${goal}`);
   }
 
   const tdee = calculateTdee({ gender, weight, height, age, activityLevel });
-  let calories = tdee;
 
   if (goal === "lose") {
-    calories = Math.max(tdee - 500, MIN_CALORIES[gender] || 1200);
-  } else if (goal === "gain") {
-    calories = tdee + 500;
+    return Math.max(tdee - 450, MIN_CALORIES[gender] || 1450);
   }
-
-  return Math.round(calories);
+  if (goal === "gain") {
+    return Math.round(tdee + 450);
+  }
+  return tdee;
 };
 
 module.exports = { calculateCalories, calculateBMR, calculateTdee };

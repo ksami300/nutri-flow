@@ -1,6 +1,6 @@
-const mealsDb = require("../data/meals");
+﻿const mealsDb = require("../data/meals");
 
-// 📊 USAGLAŠENA DISTRIBUCIJA KALORIJA SA TEORIJOM DIPLOMSKOG RADA (100% TAČNO)
+// ðŸ“Š USAGLAÅ ENA DISTRIBUCIJA KALORIJA SA TEORIJOM DIPLOMSKOG RADA (100% TAÄŒNO)
 const MEAL_DISTRIBUTION = [
   { type: "breakfast", ratio: 0.25, label: "Breakfast" },
   { type: "lunch", ratio: 0.35, label: "Lunch" },
@@ -16,10 +16,11 @@ const mealTypeCategories = {
 };
 
 const veganBlacklist = [
-  "egg (whole)",
+  "whole eggs",
+  "egg whites",
   "chicken breast",
-  "salmon",
-  "cottage cheese",
+  "lean beef burger",
+  "young cheese",
   "greek yogurt",
   "turkey breast",
   "tuna",
@@ -37,12 +38,21 @@ const WEEK_DAYS = [
   "Sunday",
 ];
 
-const normalizePreferences = (preferences = {}) => ({
-  dietType: preferences.dietType || "standard",
-  excludedFoods: Array.isArray(preferences.excludedFoods)
+const normalizePreferences = (preferences = {}) => {
+  const rawExcluded = Array.isArray(preferences.excludedFoods)
     ? preferences.excludedFoods.map((item) => item.trim().toLowerCase())
-    : [],
-});
+    : [];
+  const noteTokens = typeof preferences.customNote === "string"
+    ? preferences.customNote.toLowerCase().split(/[,;.\n]+/).map((s) => s.trim()).filter(Boolean)
+    : [];
+  return {
+    dietType: preferences.dietType || "standard",
+    excludedFoods: [...new Set([...rawExcluded, ...noteTokens])],
+    healthConditions: Array.isArray(preferences.healthConditions) ? preferences.healthConditions : [],
+    customNote: preferences.customNote || "",
+    market: preferences.market || "SR",
+  };
+};
 
 const filterFoods = (mealType, preferences) => {
   const allowedCategories = mealTypeCategories[mealType] || ["all"];
@@ -50,7 +60,12 @@ const filterFoods = (mealType, preferences) => {
   return mealsDb.filter((food) => {
     const name = food.name.toLowerCase();
     if (!allowedCategories.includes(food.category)) return false;
-    if (preferences.excludedFoods.includes(name)) return false;
+        const nameSr = (food.nameSr || "").toLowerCase();
+    const tags = Array.isArray(food.tags) ? food.tags : [];
+    if (preferences.excludedFoods.some((ex) => ex && (name.includes(ex) || nameSr.includes(ex)))) return false;
+    if (preferences.healthConditions.includes("diabetes") && tags.includes("high-glycemic")) return false;
+    if (preferences.healthConditions.includes("hypertension") && tags.includes("high-sodium")) return false;
+    if (preferences.healthConditions.includes("cholesterol") && tags.includes("cholesterol-limit")) return false;
     if (preferences.dietType === "keto" && food.carbs > 10) return false;
     if (preferences.dietType === "vegan" && veganBlacklist.includes(name)) return false;
     return true;
@@ -225,3 +240,5 @@ const generateGroceryList = (plan) => {
 };
 
 module.exports = { generateMealPlan, generateWeeklyPlan, generateGroceryList };
+
+

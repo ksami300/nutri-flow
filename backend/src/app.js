@@ -43,7 +43,7 @@ const allowedOrigins = (env.FRONTEND_URL || "")
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".trycloudflare.com")) return callback(null, true);
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".trycloudflare.com") || origin.endsWith(".ngrok-free.dev") || origin.endsWith(".ngrok.io")) return callback(null, true);
     return callback(new Error("Origin nije dozvoljen."));
   },
   credentials: true,
@@ -112,6 +112,8 @@ app.use(sentryErrorHandler);
 app.use(errorHandler);
 
 module.exports = app;
+
+
 
 
 
