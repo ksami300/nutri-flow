@@ -20,7 +20,7 @@ export default function RegisterPage() {
       return;
     }
 
-    const result = await AuthService.register(name, email, password, marketingConsent);
+    const result = await AuthService.register(name.trim(), email.trim().toLowerCase(), password, marketingConsent);
     if (result.success) {
       alert("🎉 Registracija uspešna! Prebacujemo vas na stranicu za prijavu.");
       window.location.href = "/login";

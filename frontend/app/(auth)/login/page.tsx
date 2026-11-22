@@ -18,7 +18,7 @@ export default function LoginPage() {
       return;
     }
 
-    const result = await AuthService.login(email, password);
+    const result = await AuthService.login(email.trim().toLowerCase(), password);
     if (result.success) {
       window.location.href = "/dashboard";
     } else {
