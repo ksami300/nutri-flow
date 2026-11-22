@@ -54,17 +54,17 @@ export default function DashboardPage() {
   const [copiedPlanId, setCopiedPlanId] = useState<string | null>(null);
   const [reminderActive, setReminderActive] = useState<boolean>(false);
 
-  const [weightKg, setWeightKg] = useState<number>(85);
-  const [heightCm, setHeightCm] = useState<number>(180);
-  const [weightLbs, setWeightLbs] = useState<number>(187);
-  const [heightFt, setHeightFt] = useState<number>(5);
-  const [heightIn, setHeightIn] = useState<number>(11);
+  const [weightKg, setWeightKg] = useState<string>("85");
+  const [heightCm, setHeightCm] = useState<string>("180");
+  const [weightLbs, setWeightLbs] = useState<string>("187");
+  const [heightFt, setHeightFt] = useState<string>("5");
+  const [heightIn, setHeightIn] = useState<string>("11");
 
-  const [age, setAge] = useState<number>(28);
+  const [age, setAge] = useState<string>("28");
   const [gender, setGender] = useState<"male" | "female">("male");
   const [activityLevel, setActivityLevel] = useState<string>("active");
   const [goal, setGoal] = useState<"lose" | "gain" | "maintain">("maintain");
-  const [trainingDays, setTrainingDays] = useState<number>(4);
+  const [trainingDays, setTrainingDays] = useState<string>("4");
   const [dietType, setDietType] = useState<"standard" | "keto" | "vegan" | "high-protein">("high-protein");
   const [healthConditions, setHealthConditions] = useState<string[]>([]);
   const [excludedFoods, setExcludedFoods] = useState<string[]>([]);
@@ -213,34 +213,34 @@ export default function DashboardPage() {
                 <>
                   <div>
                     <label className="block text-xs text-slate-400 mb-1">{lang === "SR" ? "Težina (kg)" : "Weight (kg)"}</label>
-                    <input type="number" min={35} max={250} value={weightKg} onChange={(e) => setWeightKg(Number(e.target.value))} className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
+                    <input type="number" min={35} max={250} value={weightKg} onChange={(e) => setWeightKg(e.target.value.replace(/^0+(?=\d)/, ""))} className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
                   </div>
                   <div>
                     <label className="block text-xs text-slate-400 mb-1">{lang === "SR" ? "Visina (cm)" : "Height (cm)"}</label>
-                    <input type="number" min={120} max={240} value={heightCm} onChange={(e) => setHeightCm(Number(e.target.value))} className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
+                    <input type="number" min={120} max={240} value={heightCm} onChange={(e) => setHeightCm(e.target.value.replace(/^0+(?=\d)/, ""))} className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
                   </div>
                 </>
               ) : (
                 <>
                   <div>
                     <label className="block text-xs text-slate-400 mb-1">Weight (lbs)</label>
-                    <input type="number" min={80} max={550} value={weightLbs} onChange={(e) => setWeightLbs(Number(e.target.value))} className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
+                    <input type="number" min={80} max={550} value={weightLbs} onChange={(e) => setWeightLbs(e.target.value.replace(/^0+(?=\d)/, ""))} className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <label className="block text-xs text-slate-400 mb-1">Height (ft)</label>
-                      <input type="number" min={4} max={7} value={heightFt} onChange={(e) => setHeightFt(Number(e.target.value))} className="w-full px-2.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
+                      <input type="number" min={4} max={7} value={heightFt} onChange={(e) => setHeightFt(e.target.value.replace(/^0+(?=\d)/, ""))} className="w-full px-2.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
                     </div>
                     <div>
                       <label className="block text-xs text-slate-400 mb-1">(in)</label>
-                      <input type="number" min={0} max={11} value={heightIn} onChange={(e) => setHeightIn(Number(e.target.value))} className="w-full px-2.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
+                      <input type="number" min={0} max={11} value={heightIn} onChange={(e) => setHeightIn(e.target.value.replace(/^0+(?=\d)/, ""))} className="w-full px-2.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
                     </div>
                   </div>
                 </>
               )}
               <div>
                 <label className="block text-xs text-slate-400 mb-1">{lang === "SR" ? "Godine" : "Age"}</label>
-                <input type="number" min={14} max={95} value={age} onChange={(e) => setAge(Number(e.target.value))} className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
+                <input type="number" min={14} max={95} value={age} onChange={(e) => setAge(e.target.value.replace(/^0+(?=\d)/, ""))} className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-white font-semibold" required />
               </div>
               <div>
                 <label className="block text-xs text-slate-400 mb-1">{lang === "SR" ? "Pol" : "Gender"}</label>
@@ -366,4 +366,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
 

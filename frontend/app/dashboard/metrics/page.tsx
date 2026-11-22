@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { API_BASE_URL } from "@/lib/api-config";
@@ -42,11 +42,11 @@ export default function MetricsPage() {
           });
         }
 
-        // 2. Asinhroni zahvat raspoređenih Redis poslova (BullMQ)
+        // 2. Asinhroni zahvat rasporeÄ‘enih Redis poslova (BullMQ)
         const queueData = await ObservabilityService.getQueueMetrics();
         setQueueStatus(queueData);
       } catch (err) {
-        console.error("Greška pri sinhronizaciji telemetrijskih vodova:", err);
+        console.error("GreÅ¡ka pri sinhronizaciji telemetrijskih vodova:", err);
       }
     }
 
@@ -59,7 +59,7 @@ export default function MetricsPage() {
     <div className="p-6 max-w-4xl mx-auto space-y-6 text-white bg-slate-950 min-h-screen">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Sistemski Monitoring</h1>
-        <p className="text-slate-400 text-sm">Praćenje zdravlja i asinhronih Redis redova u realnom vremenu.</p>
+        <p className="text-slate-400 text-sm">PraÄ‡enje zdravlja i asinhronih Redis redova u realnom vremenu.</p>
       </div>
 
       <CosmicEngine />
@@ -67,7 +67,7 @@ export default function MetricsPage() {
       {/* PRIKAZ REFAKTORISANE ASINHRONE REDIS TELEMETRIJE */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
-          <span className="text-xs text-slate-400 block mb-1">Queued (Čekanje)</span>
+          <span className="text-xs text-slate-400 block mb-1">Queued (ÄŒekanje)</span>
           <span className="text-xl font-bold text-yellow-400">{queueStatus.waiting}</span>
         </div>
         <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
@@ -79,18 +79,18 @@ export default function MetricsPage() {
           <span className="text-xl font-bold text-emerald-400">{queueStatus.completed}</span>
         </div>
         <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
-          <span className="text-xs text-slate-400 block mb-1">Kritični Failures</span>
+          <span className="text-xs text-slate-400 block mb-1">KritiÄni Failures</span>
           <span className="text-xl font-bold text-red-500">{queueStatus.failed}</span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
-          <span className="text-xs text-slate-400 block mb-1">CPU Iskorišćenost</span>
+          <span className="text-xs text-slate-400 block mb-1">CPU IskoriÅ¡Ä‡enost</span>
           <span className="text-xl font-bold text-emerald-400">{metrics.cpuUsage}%</span>
         </div>
         <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
-          <span className="text-xs text-slate-400 block mb-1">Potrošnja RAM-a</span>
+          <span className="text-xs text-slate-400 block mb-1">PotroÅ¡nja RAM-a</span>
           <span className="text-xl font-bold text-teal-400">{metrics.memoryUsage}%</span>
         </div>
         <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
@@ -105,3 +105,4 @@ export default function MetricsPage() {
     </div>
   );
 }
+
