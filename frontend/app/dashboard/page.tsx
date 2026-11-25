@@ -312,7 +312,7 @@ export default function DashboardPage() {
               <input type="text" value={customNote} onChange={(e) => setCustomNote(e.target.value)} placeholder={lang === "SR" ? "Dodatna napomena (npr. nemam bademe, izbaci tunjevinu, više jaja i piletine...)" : "Additional note (e.g. no almonds, exclude tuna, prefer chicken and eggs...)"} className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-500" />
             </div>
             <button type="submit" disabled={loading} className="w-full py-3.5 px-6 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-50">
-              {loading ? (lang === "SR" ? "Pravim tvoj plan..." : "Building your plan...") : (lang === "SR" ? "Generiši moj realan plan ishrane" : "Generate My Practical Meal Plan")}
+              {loading ? (lang === "SR" ? "Pravim tvoj dnevni jelovnik (ako se server budi, traje ~25s)..." : "Building your daily meal plan (waking server may take ~25s)...") : (lang === "SR" ? "Generiši kompletan dnevni jelovnik (Doručak, Ručak, Užina, Večera)" : "Generate Full Daily Meal Plan (Breakfast, Lunch, Snack, Dinner)")}
             </button>
           </form>
           <div className="space-y-6">
